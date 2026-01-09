@@ -1,6 +1,6 @@
 # Digital Clock
 I created a digital clock in Vivado using verilog that would count up from 00:00 to 59:59.
-The board I used is the Nexys8 and the block diagram for the digital clock is shown below.
+The board I used is the Nexys-a7 and the block diagram for the digital clock is shown below.
 <img width="1813" height="1933" alt="image" src="https://github.com/user-attachments/assets/15a4809d-cf99-45ab-ad89-99df1d7e64f6" />
 
 ## Top Module - DigitalClock.v
