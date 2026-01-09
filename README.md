@@ -1,12 +1,14 @@
 # Digital Clock
 I created a digital clock in Vivado using verilog that would count up from 00:00 to 59:59.
-The board I used is the Nexys8 and the block diagram for the digital is shown below.
-**insert block diagram**
+The board I used is the Nexys8 and the block diagram for the digital clock is shown below.
+<img width="1813" height="1933" alt="image" src="https://github.com/user-attachments/assets/15a4809d-cf99-45ab-ad89-99df1d7e64f6" />
 
 ## Top Module - DigitalClock.v
 
+<details><summary>ClkGen1Hz</summary>
+    
 ## Generate 1kHz Clock
-<details>
+
 The system clock for the Nexys8 board runs at ...MHz, so in module ClkGen1kHz, the system clock is converted to a 1kHz clock.
 ```verilog
 always @ (posedge clk)
@@ -29,9 +31,34 @@ always @ (posedge clk)
 ```
 </details>
 
+<details><summary>MinuteClkGen</summary>
+    
 ## Minute Clock Generation
+
+```verilog
+always @ (posedge clk)
+    begin
+      if (clk)
+        begin
+          counter=0;
+          outsignal=0;
+        end
+      else
+        begin
+          counter = counter +1;
+          if (counter == 50000000) //why is this a 0.5 Hz?
+            begin
+              outsignal=~outsignal;
+              counter =0;
+            end
+        end
+    end
+```
+</details>
+
+<details><summary>Minutes and Seconds Counter</summary>
+    
 ## Minutes and Seconds Counter
-<details>
 ```verilog
 always@(posedge clk, posedge resetSW)
     begin
@@ -77,8 +104,9 @@ always@(posedge clk, negedge resetSW)
 ```
 </details>
           
+<details><summary>Digit Separator</summary>
+    
 ## Digit Separator
-<details>
 ```verilog
 always@(sec)
     begin
@@ -92,9 +120,11 @@ always@(sec)
     end
 ```
 </details>
-          
+
+<details><summary>Binary to sseg Decoder</summary>
+    
 ## Binary-to-Seven-Segment Decoder
-<details>
+
 ```verilog
 always @(*)
   begin
